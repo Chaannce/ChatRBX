@@ -34,7 +34,7 @@ MainTab:Button("Send Message", function()
     
     local Message_Encoded = HttpService:UrlEncode(Message)
     
-    local response = syn.request({
+    local response = RequestFunction({
         Url = "https://eurythmical-salvage.000webhostapp.com/chatRBXapi.php?prompt=" .. Message_Encoded,
         Method = "GET"
     })
