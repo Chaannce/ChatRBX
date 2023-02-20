@@ -1,11 +1,17 @@
+local Player = game:GetService("Players").LocalPlayer
 local HttpService = game:GetService("HttpService")
 local RequestFunction = (syn or syn.request) or request or http_request
-local UILibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/laderite/bleklib/main/library.lua"))()
-local logo = {"ChatGPT in ROBLOX! - ChatRBX", "Created by Cyros and PixelPenguin"}
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/laderite/bleklib/main/library.lua", true))()
+local Logo = { "ChatGPT in ROBLOX! - ChatRBX", "Created by Cyros and PixelPenguin" }
 
-local URI = "add your url here"
+if not RequestFunction then
+    Player:Kick[[Exploit not supported.]]
+    return
+end
 
-for _, v in pairs(logo) do
+local Uri = "https://example.com"
+
+for _, v in pairs(Logo) do
     print(v)
 end
 
@@ -14,7 +20,7 @@ local Window = UILibrary:Create({
     StartupSound = {
         Toggle = true,
         SoundID = "rbxassetid://6958727243",
-        TimePosition = 1
+        TimePosition = 1,
     }
 })
 
@@ -23,32 +29,32 @@ local OptionsTab = Window:Tab("Options")
 
 -- Main Tab:
 
-MainTab:Label("Make sure you press 'F9' to see messages")
+MainTab:Label[[Make sure you press "F9" to view messages.]]
 
-local Message
+local Message = nil
 
 MainTab:Textbox("Send Text", function(v)
     Message = v
 end)
 
 MainTab:Button("Send Message", function()
-    print("Client > " .. Message)
+    print(string.format("Client > %s", Message))
     
     local Message_Encoded = HttpService:UrlEncode(Message)
     
-    local response = RequestFunction({
-        Url = URI .. "?prompt=" .. Message_Encoded,
+    local Response = RequestFunction({
+        Url = string.format("%s?prompt=%s", Uri, Message_Encoded),
         Method = "GET"
     })
-
-    print("Server > " .. response.Body)
+        
+    print(string.format("Server > %s", Response.Body))
 end)
 
 -- Options / UI Tab:
 
 OptionsTab:Button("Destroy UI", function()
     print("Ending...")
-    task.wait(.5)
+    task.wait(0.5)
     Window:Exit()
     print("---------------------------------------")
 end)
