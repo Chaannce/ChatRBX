@@ -36,7 +36,7 @@ local OptionsTab = Window:Tab("Options")
 
 -- Main Tab:
 
-MainTab:Label [[Make sure you press "F9" to view messages.]]
+MainTab:Label[[Make sure you press "F9" to view messages.]]
 
 local Printing = false
 local Enabled = false
@@ -65,6 +65,7 @@ MainTab:Button("Send Message", function()
             print(string.format("Client > %s", Message))
             print(string.format("Server > %s", Response.Body))
         end
+    end
 end)
 
 MainTab:Toggle("Aimbot", function(v)
