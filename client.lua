@@ -1,20 +1,26 @@
+--[[
+    Name: client.lua
+    Author(s): Yeild, PixelPenguin, PixelCircuit
+]]
+
 local Player = game:GetService("Players").LocalPlayer
+local StarterGui = game:GetService("StarterGui")
 local HttpService = game:GetService("HttpService")
 local RequestFunction = (syn or syn.request) or request or http_request
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/laderite/bleklib/main/library.lua", true))()
 local Logo = {"ChatGPT in ROBLOX! - ChatRBX", "Created by Yxild, PixelPenguin and PixelCircuit!"}
-local DCSE = game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents
+local DCSE = game:GetService("ReplicatedStorage")["DefaultChatSystemChatEvents"]
 
-if not RequestFunction then
+if (not RequestFunction) then
     Player:Kick [[Exploit not supported.]]
     return
 end
 
-local Uri = "https://example.com"
-
 for _, v in pairs(Logo) do
     print(v)
 end
+
+local Uri = "https://example.com"
 
 local Window = Library:Create({
     Name = "ChatRBX",
@@ -49,14 +55,16 @@ MainTab:Button("Send Message", function()
     })
 
     if (Enabled == true) then
-        if (Printing == false) then
+        if (not Printing) then
+            StarterGui:SetCore("ChatMakeSystemMessage", {
+                Text = string.format("[ChatRBX]: Client > %s\nServer > %s", Message, Response.Body),
+                Color = Color3.fromRGB(0, 255, 0),
+                Font = Enum.Font.SourceSansBold,
+            })
+        else
             print(string.format("Client > %s", Message))
             print(string.format("Server > %s", Response.Body))
-        elseif (Printing == true) then
-            DCSE.SayMessageRequest:FireServer(string.format("ChatRBX (Client) > %s", Message), Response.Body, "All")
-            DCSE.SayMessageRequest:FireServer(string.format("ChatRBX (Server) > %s"), Response.Body, "All")
         end
-    end
 end)
 
 MainTab:Toggle("Aimbot", function(v)
