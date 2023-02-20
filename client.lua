@@ -3,6 +3,8 @@ local RequestFunction = (syn or syn.request) or request or http_request
 local UILibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/laderite/bleklib/main/library.lua"))()
 local logo = {"ChatGPT in ROBLOX! - ChatRBX", "Created by Cyros and PixelPenguin"}
 
+local URI = "add your url here"
+
 for _, v in pairs(logo) do
     print(v)
 end
@@ -35,7 +37,7 @@ MainTab:Button("Send Message", function()
     local Message_Encoded = HttpService:UrlEncode(Message)
     
     local response = RequestFunction({
-        Url = "https://eurythmical-salvage.000webhostapp.com/chatRBXapi.php?prompt=" .. Message_Encoded,
+        Url = URI .. "?prompt=" .. Message_Encoded,
         Method = "GET"
     })
 
